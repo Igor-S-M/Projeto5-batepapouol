@@ -17,6 +17,7 @@ function manterLogado(){
 let listaMensagens = []
 function getMensagens(){
     axios.get("https://mock-api.driven.com.br/api/v6/uol/messages").then(tipoMensagem)
+    
 }
 
 //chamar as mensagens que estão no Server
@@ -39,19 +40,20 @@ function tipoMensagem(resposta){
             let data = objeto.time
             let endereco =objeto.from
             let texto = objeto.text
-            mensagemNormal(data,endereco,texto)
+            let destinatario = objeto.to
+            mensagemNormal(data,endereco,texto,destinatario)
         }
     })
-
+    rolarFim()
 }
 
 
 //tipos de mensagens para renderizar
-function mensagemNormal(data,endereco,texto){
+function mensagemNormal(data,endereco,texto,destinatario){
 document.querySelector(".feed").innerHTML += `
 <div class="mensagem normal">
 <div class="data">(${data})</div>
-<div class="endereco"><h1>${endereco}</h1> para <h1>Todos</h1>: </div>
+<div class="endereco"><h1>${endereco}</h1> para <h1>${destinatario}</h1>: </div>
 <div class="texto"> ${texto}</div>
 </div>
 `
@@ -80,10 +82,47 @@ document.querySelector(".feed").innerHTML +=`
 function enviarMensagem(){
     let mensagem = document.querySelector(".barra-escrever .buscar input").value
     let obj = {
-        from:"EU", 
-        to: "Todos",
-        text:"arroz",
+        from:userName, 
+        to:"Todos",
+        text:mensagem,
         type:"message"
     }
-    axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", obj)
+    //console.log(mensagem)
+    axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", obj).then(getMensagens)
+    document.querySelector(".barra-escrever .buscar input").value = ""
+    
 }
+
+
+
+function rolarFim(){
+    const ultimaMensagem = document.querySelector(".feed menssagem:last-child");
+    ultimaMensagem.scrollIntoView() ;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+entrouNaSala()
+getMensagens()
+
+setInterval(getMensagens, 3000)
+setInterval(manterLogado, 5000)

@@ -102,8 +102,8 @@
   .buscar > input {
     background-color: #ffffff;
     border: 0px solid white;
-    width: 150px;
-    height: 28px;
+    width: 300px;
+    height: 30px;
   }
   
   .buscar > input::placeholder {
