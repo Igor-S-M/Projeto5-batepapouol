@@ -1,11 +1,5 @@
-let mensagem = document.querySelector(".feed")
+entrouNaSala()
+getMensagens()
 
-mensagem.innerHTML = `
-<div class="mensagem">
-    <div class="data">(09:21:45)</div>
-    <div class="endereco"> <h1>João</h1> para <h1>Todos</h1>: </div>
-    <div class="texto"> Bom diaaaaaaaaaa!</div>
-</div>
-`
-
-
+setInterval(getMensagens, 3000)
+setInterval(manterLogado, 5000)
